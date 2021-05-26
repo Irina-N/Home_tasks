@@ -1,0 +1,106 @@
+body {
+    margin: 0 auto;
+}
+
+.layout {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: nowrap column;
+    background-color: #c2f0f0;
+}
+
+.header {
+    width: 100vw;
+    background-color: #239090;
+    color: #fff;
+    font-family: Arial;
+    font-weight: 500;
+    font-size: 24px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+.content {
+    width: 100vw;
+    height: inherit;
+    display: flex;
+    margin-top: 40px;
+}
+
+.chatlist {
+    width: 20vw;
+    overflow-y: scroll;
+    background-color: #c1f0f0;
+}
+
+.message_field {
+    width: 80vw;
+    display: flex;
+    flex-flow: nowrap column;
+    background-color: #d6f5f5;
+}
+
+.messages_board {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    display: flex;
+    flex-flow: nowrap column;
+    padding: 10px;
+    position: static;
+    height: calc(100vh - 96px);
+    right: 0;
+}
+
+.message {
+    background-color: #98e6e6;
+    padding: 7px 20px 5px;
+    max-width: 70vw;
+    border-radius: 10px;
+    margin: 0 0 8px;
+}
+
+
+.message_text {
+    font-size: 16px;
+    margin: 0;
+}
+
+.message_sender {
+    font-size: 14px;
+    text-align: right;
+    color: #d6f5f5;
+    margin: 3px 0 0;
+}
+
+.text_field {
+    width: 79vw;
+    height: 56px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    position: fixed;
+    bottom: 0;
+    background-color: #6fdcdc;
+}
+
+.typing_text {
+    flex-basis: 78vw;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border: none;
+}
+
+.send_btn {
+    width: 44px;
+    height: 44px;
+    color: rgba(214, 245, 245, 0.87);
+    background-color: #239090;
+}
