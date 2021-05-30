@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 export default class Message extends React.Component {
     static propTypes = {
         text: propTypes.string.isRequired,
-        sender: propTypes.string,
+        sender: propTypes.string.isRequired,
     };
 
     render() {

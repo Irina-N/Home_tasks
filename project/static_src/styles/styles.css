@@ -88,6 +88,7 @@ body {
     position: fixed;
     bottom: 0;
     background-color: #6fdcdc;
+    font-size: 22px;
 }
 
 .typing_text {
@@ -103,4 +104,45 @@ body {
     height: 44px;
     color: rgba(214, 245, 245, 0.87);
     background-color: #239090;
+}
+
+.profile {
+    background-color: #c1f0f0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.profile_header {
+    background-color: #239090;
+    width: 100vw;
+    height: 40px;
+    padding: 0 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_header_title {
+    font-size: 34px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.profile_header>a {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    left: 20px;
+    top: 8px;
+}
+
+.profile_link {
+    font-size: 22px;
+    color: #fff;
+    position: fixed;
+    left: 50px;
+    top: 8px;
+    text-decoration: underline;
 }
