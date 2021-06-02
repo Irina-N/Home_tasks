@@ -31,12 +31,29 @@ body {
     height: inherit;
     display: flex;
     margin-top: 40px;
+    gap: 10px;
 }
 
 .chatlist {
     width: 20vw;
+    height: calc(100vh - 40px);
     overflow-y: scroll;
     background-color: #c1f0f0;
+}
+
+.add_chat_field {
+    display: flex;
+    justify-content: space-between !important;
+    gap: 10px;
+}
+
+.add_chat_btn {
+    width: 48px;
+    height: 48px;
+}
+
+.new_chat_title {
+    flex-basis: 80%;
 }
 
 .message_field {
@@ -99,22 +116,22 @@ body {
     border: none;
 }
 
-.send_btn {
+/* .send_btn {
     width: 44px;
     height: 44px;
     color: rgba(214, 245, 245, 0.87);
     background-color: #239090;
-}
+} */
 
 .profile {
     background-color: #c1f0f0;
-    width: 100vw;
+    width: 99.6vw;
     height: 100vh;
 }
 
 .profile_header {
     background-color: #239090;
-    width: 100vw;
+    width: 97.5vw;
     height: 40px;
     padding: 0 20px;
     position: relative;
@@ -132,7 +149,6 @@ body {
 .profile_header>a {
     font-size: 24px;
     color: #fff;
-    text-decoration: none;
     position: absolute;
     left: 20px;
     top: 8px;
@@ -145,4 +161,50 @@ body {
     left: 50px;
     top: 8px;
     text-decoration: underline;
+}
+
+.profile_data {
+    padding: 30px 50px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.user_info_block {
+    padding-left: 10px;
+    font-family: Arial;
+    border: 0.5px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    color: #239090;
+    font-size: 26px;
+    cursor: default;
+}
+
+.user_name_input>div>fieldset,
+.user_age_input>div>fieldset {
+    color: #239090;
+    border: none;
+    text-decoration: underline;
+
+}
+
+.user_name_input>div>input,
+.user_age_input>div>input {
+    font-size: 26px;
+    width: 200px;
+    color: #239090;
+    font-weight: 700;
+}
+
+.profile_data>button {
+    background-color: #239090;
+}
+
+fieldset {
+    cursor: text;
 }

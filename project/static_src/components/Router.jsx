@@ -12,7 +12,7 @@ export default class Router extends React.Component {
                     exact
                     path='/chat/:chatId/'
                     render={obj => <Layout
-                        chatId={Number(obj.match.params.chatId)}
+                        chatId={obj.match.params.chatId}
                     />
                     }
                 />

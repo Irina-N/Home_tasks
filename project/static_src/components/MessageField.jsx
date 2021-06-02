@@ -3,73 +3,33 @@ import propTypes from 'prop-types'
 import { TextField, Fab } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import Message from './Message.jsx';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { sendMessage } from '../actions/message.jsx';
 
-export default class MessageField extends React.Component {
-    constructor(props) {
-        super(props);
-        this.textInput = React.createRef();
-    }
 
+class MessageField extends React.Component {
     static propTypes = {
-        chatId: propTypes.number.isRequired,
-    }
+        chatId: propTypes.string.isRequired,
+        chats: propTypes.object.isRequired,
+        messages: propTypes.object.isRequired,
+        sendMessage: propTypes.func.isRequired,
+        userInfo: propTypes.object.isRequired,
+    };
 
     state = {
-        chats: {
-            1: { title: 'Lorem', messageList: [1] },
-            2: { title: 'Ipsum', messageList: [2] },
-            3: { title: 'Dolor', messageList: [3] },
-            4: { title: 'Sit', messageList: [] },
-            5: { title: 'Amet', messageList: [4] },
-        },
-        messages: {
-            1: { text: "Привет!", sender: "bot" },
-            2: { text: "Как дела?", sender: "bot" },
-            3: { text: "This is Dolor!", sender: "bot" },
-            4: { text: "Amet?", sender: "bot" },
-        },
         input: '',
     };
 
-    componentDidMount() {
-        this.textInput.current.focus();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        const { messages } = this.state;
-        if (Object.keys(prevState.messages).length < Object.keys(messages).length &&
-            Object.values(messages)[Object.values(messages).length - 1].sender == 'me') {
-            this.timer = setTimeout(() =>
-                this.handleSendMessage('I\'m a robot', 'bot'), 500);
-        }
-        this.textInput.current.focus();
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.timer);
-    }
-
     handleSendMessage = (message, sender) => {
-        const { messages, chats, input } = this.state;
-        const { chatId } = this.props;
+        const { input } = this.state;
+        const { messages, chatId, userInfo } = this.props;
+        const messageId = Object.keys(messages).length + 1;
 
         if (input.length > 0 || sender == 'bot') {
-            const messageId = Object.keys(messages).length + 1;
-            this.setState({
-                messages: {
-                    ...messages,
-                    [messageId]: { text: message, sender: sender }
-                },
-                chats: {
-                    ...chats,
-                    [chatId]: {
-                        ...chats[chatId],
-                        messageList: [...chats[chatId]['messageList'], messageId]
-                    }
-                }
-            });
-        }
-        if (sender == 'me') {
+            this.props.sendMessage(messageId, message, sender, chatId);
+        };
+        if (sender == userInfo.userName) {
             this.setState({ input: '' });
         }
     }
@@ -80,27 +40,27 @@ export default class MessageField extends React.Component {
 
     handleKeyUp = (event) => {
         if (event.key == 'Enter') {
-            this.handleSendMessage(this.state.input, 'me');
+            this.handleSendMessage(this.state.input, this.props.userInfo.userName);
         }
     };
 
     render() {
-        const { messages, chats } = this.state;
-        const { chatId } = this.props;
 
-        const messageElements = chats[chatId].messageList.map((messageId, index) => (
+        const { chatId, chats, messages, userInfo } = this.props;
+
+        const messageElements = chats[chatId].messageList.map((messageId) => (
             <Message
-                key={index}
+                key={messageId}
                 text={messages[messageId].text}
                 sender={messages[messageId].sender}
             />)
         );
 
         return <div className="message_field">
-            <div key='messageElements' className="messages_board">
+            <div className="messages_board">
                 {messageElements}
             </div>
-            <div key='textInput' className="text_field">
+            <div className="text_field">
                 <TextField
                     id="outlined-basic"
                     className="typing_text"
@@ -114,10 +74,20 @@ export default class MessageField extends React.Component {
                 <Fab
                     size='medium'
                     className="send_btn"
-                    onClick={() => this.handleSendMessage(this.state.input, 'me')}>
+                    onClick={() => this.handleSendMessage(this.state.input, userInfo.userName)}>
                     <SendIcon />
                 </Fab>
             </div>
         </div >;
     }
 }
+
+const mapStateToProps = state => ({
+    chats: state.chatsReducer.chats,
+    userInfo: state.profileReducer.userInfo,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageField);
+
