@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "static", "build"),
         filename: 'app.js',
-    },
+    },    
     module: {
         rules: [
             {
@@ -34,4 +34,11 @@ module.exports = {
             },    
         ],
     },
+    devServer: {
+        port: 8080,
+        historyApiFallback: {
+            index: 'index.html'
+        }
+    },
+    devtool: 'cheap-inline-module-source-map',
 };
