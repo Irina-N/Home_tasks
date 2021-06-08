@@ -5,7 +5,7 @@ import SendIcon from '@material-ui/icons/Send';
 import Message from './Message.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { sendMessage } from '../actions/message.jsx';
+import { sendMessageThunk } from '../actions/message.jsx';
 
 
 class MessageField extends React.Component {
@@ -13,7 +13,7 @@ class MessageField extends React.Component {
         chatId: propTypes.string.isRequired,
         chats: propTypes.object.isRequired,
         messages: propTypes.object.isRequired,
-        sendMessage: propTypes.func.isRequired,
+        sendMessageThunk: propTypes.func.isRequired,
         userInfo: propTypes.object.isRequired,
     };
 
@@ -23,11 +23,10 @@ class MessageField extends React.Component {
 
     handleSendMessage = (message, sender) => {
         const { input } = this.state;
-        const { messages, chatId, userInfo } = this.props;
-        const messageId = Object.keys(messages).length + 1;
+        const { chatId, userInfo } = this.props;
 
         if (input.length > 0 || sender == 'bot') {
-            this.props.sendMessage(messageId, message, sender, chatId);
+            this.props.sendMessageThunk(message, sender, chatId);
         };
         if (sender == userInfo.userName) {
             this.setState({ input: '' });
@@ -46,13 +45,12 @@ class MessageField extends React.Component {
 
     render() {
 
-        const { chatId, chats, messages, userInfo } = this.props;
-
-        const messageElements = chats[chatId].messageList.map((messageId) => (
+        const { chatId, messages, userInfo } = this.props;
+        const messageElements = messages[chatId].map((message, index) => (
             <Message
-                key={messageId}
-                text={messages[messageId].text}
-                sender={messages[messageId].sender}
+                key={index}
+                text={message.text}
+                sender={message.sender}
             />)
         );
 
@@ -84,10 +82,15 @@ class MessageField extends React.Component {
 
 const mapStateToProps = state => ({
     chats: state.chatsReducer.chats,
+    messages: state.messagesReducer.messages,
     userInfo: state.profileReducer.userInfo,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return {
+        sendMessageThunk: (message, sender, chatId) => dispatch(sendMessageThunk(message, sender, chatId)),
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageField);
 

@@ -92,6 +92,10 @@ const mapStateToProps = state => ({
     userInfo: state.profileReducer.userInfo,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ editProfile }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return {
+        editProfile: (name, age) => dispatch(editProfile(name, age)),
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -23,4 +23,3 @@ export default class Router extends React.Component {
         )
     }
 }
-//Сделать страницу профиля, располагающуюся по пути /profile/, и ссылку на нее в Header’е мессенджера.

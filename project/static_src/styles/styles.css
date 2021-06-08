@@ -39,6 +39,43 @@ body {
     height: calc(100vh - 40px);
     overflow-y: scroll;
     background-color: #c1f0f0;
+    position: relative;
+}
+
+.chatlist_item {
+    position: relative;
+    z-index: 1;
+}
+
+.chatlist_link>div>div.MuiListItemText-root {
+    position: relative;
+    z-index: 1;
+}
+
+.del_chat-btn {
+    position: absolute;
+    right: 5%;
+    z-index: 3;
+}
+
+.chatlist_link {
+    text-decoration: none;
+    color: #239090;
+}
+
+.chatlist_link>div>div.MuiListItemText-root>span {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+@keyframes highlighting {
+    100% {
+        color: #ff8533;
+    }
+}
+
+.highlight {
+    animation: highlighting 1.5s cubic-bezier(.14, .36, 0, 1);
 }
 
 .add_chat_field {
@@ -82,14 +119,13 @@ body {
     margin: 0 0 8px;
 }
 
-
 .message_text {
-    font-size: 16px;
+    font-size: 20px;
     margin: 0;
 }
 
 .message_sender {
-    font-size: 14px;
+    font-size: 16px;
     text-align: right;
     color: #d6f5f5;
     margin: 3px 0 0;
@@ -116,28 +152,22 @@ body {
     border: none;
 }
 
-/* .send_btn {
-    width: 44px;
-    height: 44px;
-    color: rgba(214, 245, 245, 0.87);
-    background-color: #239090;
-} */
-
 .profile {
     background-color: #c1f0f0;
-    width: 99.6vw;
+    width: 100vw;
     height: 100vh;
 }
 
 .profile_header {
     background-color: #239090;
-    width: 97.5vw;
+    width: 100vw;
     height: 40px;
     padding: 0 20px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .profile_header_title {
