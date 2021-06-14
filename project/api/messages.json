@@ -1,0 +1,20 @@
+{
+    "chat1":
+    [
+        {"text":"Привет!","sender":"bot"}
+    ],
+    "chat2":
+    [
+        {"text":"Как дела?","sender":"bot"}
+    ],
+    "chat3":
+    [
+        {"text":"This is Dolor!","sender":"bot"}
+    ],"chat4":
+    [],
+    "chat5":
+    [
+        {"text":"Amet?","sender":"bot"}
+    ]
+}
+    

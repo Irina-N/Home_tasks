@@ -8,22 +8,21 @@ import '../styles/styles.css';
 
 class Layout extends React.Component {
     static propTypes = {
-        chatId: propTypes.string.isRequired,
+        chatId: propTypes.string,
         chats: propTypes.object.isRequired,
         messages: propTypes.object.isRequired,
     };
 
-    static defaultProps = {
+    /* static defaultProps = {
         chatId: 'chat1',
-    }
+    } */
 
 
     render() {
-        const { chatId, messages, chats } = this.props;
+        const { chatId } = this.props;
 
         return <div className="layout">
             <Header
-                chatTitle={chats[chatId].title}
                 chatId={chatId}
             />
             <div className="content">

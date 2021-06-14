@@ -1,25 +1,34 @@
 import React from 'react';
 import propTypes from 'prop-types'
-import { TextField, Fab } from '@material-ui/core';
+import { TextField, Fab, CircularProgress } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import Message from './Message.jsx';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { sendMessageThunk } from '../actions/message.jsx';
+import { sendMessageThunk, sendMessage, fetchMessages } from '../actions/message.jsx';
 
 
 class MessageField extends React.Component {
     static propTypes = {
-        chatId: propTypes.string.isRequired,
+        chatId: propTypes.string,
         chats: propTypes.object.isRequired,
         messages: propTypes.object.isRequired,
         sendMessageThunk: propTypes.func.isRequired,
+        sendMessage: propTypes.func.isRequired,
+        fetchMessages: propTypes.func.isRequired,
+        messagesRequestStatus: propTypes.string.isRequired,
         userInfo: propTypes.object.isRequired,
+
     };
 
     state = {
         input: '',
     };
+
+    componentDidMount() {
+        if (this.props.messagesRequestStatus === '') {
+            this.props.fetchMessages();
+        }
+    }
 
     handleSendMessage = (message, sender) => {
         const { input } = this.state;
@@ -44,16 +53,25 @@ class MessageField extends React.Component {
     };
 
     render() {
+        if (this.props.messagesRequestStatus === 'started') {
+            return <div className="message_field">
+                <CircularProgress />
+            </div>
+        }
 
         const { chatId, messages, userInfo } = this.props;
-        const messageElements = messages[chatId].map((message, index) => (
-            <Message
-                key={index}
-                text={message.text}
-                sender={message.sender}
-            />)
-        );
+        let messageElements = <div />;
+        if (chatId) {
+            messageElements = messages[chatId].map((message, index) => (
+                <Message
+                    key={index}
+                    text={message.text}
+                    sender={message.sender}
+                />)
+            );
 
+        }
+        console.log(messageElements)
         return <div className="message_field">
             <div className="messages_board">
                 {messageElements}
@@ -83,12 +101,15 @@ class MessageField extends React.Component {
 const mapStateToProps = state => ({
     chats: state.chatsReducer.chats,
     messages: state.messagesReducer.messages,
+    messagesRequestStatus: state.messagesReducer.messagesRequestStatus,
     userInfo: state.profileReducer.userInfo,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         sendMessageThunk: (message, sender, chatId) => dispatch(sendMessageThunk(message, sender, chatId)),
+        sendMessage: (message, sender, chatId) => dispatch(sendMessage(message, sender, chatId)),
+        fetchMessages: () => dispatch(fetchMessages()),
     }
 }
 

@@ -17,13 +17,13 @@ const rootReducer = combineReducers({
     profileReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+/* const persistedReducer = persistReducer(persistConfig, rootReducer); */
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
-    persistedReducer,
+    /* persistedReducer */rootReducer,
     composeEnhancers(applyMiddleware(thunk))
 )
 
-export const persistor = persistStore(store);
+/* export const persistor = persistStore(store); */

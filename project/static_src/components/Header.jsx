@@ -7,19 +7,19 @@ class Header extends React.Component {
     static propTypes = {
         userInfo: propTypes.object.isRequired,
         chats: propTypes.object.isRequired,
-        chatId: propTypes.string.isRequired,
-        chatTitle: propTypes.string.isRequired,
+        chatId: propTypes.string,
     }
 
 
     render() {
-        const { userInfo, chatTitle } = this.props;
+        const { userInfo, chats, chatId } = this.props;
+        const title = chats[chatId]?.title ?? 'Hello!';
         return (
             <div className='header'>
                 <Link to="/profile/" className="profile_link">
                     {userInfo.userName}
                 </Link>
-                {chatTitle}
+                {title}
             </div >
         )
     }

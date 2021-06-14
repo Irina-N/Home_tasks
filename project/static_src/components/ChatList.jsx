@@ -4,20 +4,24 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { TextField, Fab } from '@material-ui/core';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+/* import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'; */
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
-import { addChatThunk } from '../actions/chats.jsx';
+import { addChatThunk, addChat, fetchChats } from '../actions/chats.jsx';
 //import { deleteChatThunk } from '../actions/chats.jsx';
 import { connect } from 'react-redux';
+
 
 
 class ChatList extends React.Component {
     static propTypes = {
         chats: propTypes.object.isRequired,
         addChatThunk: propTypes.func.isRequired,
+        fetchChats: propTypes.func.isRequired,
+        chatsRequestStatus: propTypes.string.isRequired,
         //deleteChatThunk: propTypes.func.isRequired,
     };
 
@@ -25,9 +29,17 @@ class ChatList extends React.Component {
         input: '',
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.chats === this.props.chats && nextState === this.state) return false;
+    componentDidMount() {
+        if (this.props.chatsRequestStatus === '') {
+            this.props.fetchChats();
+        }
+    }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (_.isEqual(nextProps.chats, this.props.chats) &&
+            _.isEqual(nextState, this.state)) {
+            return false;
+        }
         return true;
     }
 
@@ -39,9 +51,10 @@ class ChatList extends React.Component {
 
     handleAddChat = () => {
         const { input } = this.state;
-        const { addChatThunk } = this.props;
+        const { chats, addChatThunk } = this.props;
         if (input.length > 0) {
-            addChatThunk(input);
+            const chatId = 'chat' + (Object.keys(chats).length + 1);
+            addChatThunk(input, chatId);
             this.setState({ input: '' });
         }
     }
@@ -110,12 +123,15 @@ class ChatList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    chats: state.chatsReducer.chats
+    chats: state.chatsReducer.chats,
+    chatsRequestStatus: state.chatsReducer.chatsRequestStatus,
 })
 
 const mapDispatchToProps = dispatch => {
     return {
-        addChatThunk: title => dispatch(addChatThunk(title)),
+        addChatThunk: (title, chatId) => dispatch(addChatThunk(title, chatId)),
+        addChat: (title, chatId) => dispatch(addChat(title, chatId)),
+        fetchChats: () => dispatch(fetchChats()),
         //deleteChatThunk: chatId => dispatch(deleteChatThunk(chatId)),
     }
 }
