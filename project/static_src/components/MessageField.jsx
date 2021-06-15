@@ -25,7 +25,7 @@ class MessageField extends React.Component {
     };
 
     componentDidMount() {
-        if (this.props.messagesRequestStatus === '') {
+        if (this.props.messagesRequestStatus === '' || this.props.messagesRequestStatus === 'error') {
             this.props.fetchMessages();
         }
     }
@@ -53,25 +53,32 @@ class MessageField extends React.Component {
     };
 
     render() {
-        if (this.props.messagesRequestStatus === 'started') {
+        const { chatId, messages, userInfo, messagesRequestStatus } = this.props;
+
+        if (!chatId) {
+            return <div className="message_field" />
+        }
+
+        if (messagesRequestStatus === 'started') {
             return <div className="message_field">
                 <CircularProgress />
             </div>
         }
 
-        const { chatId, messages, userInfo } = this.props;
-        let messageElements = <div />;
-        if (chatId) {
-            messageElements = messages[chatId].map((message, index) => (
-                <Message
-                    key={index}
-                    text={message.text}
-                    sender={message.sender}
-                />)
-            );
-
+        if (messagesRequestStatus === 'error') {
+            return <div className="message_field">
+                Can't get messages
+            </div>
         }
-        console.log(messageElements)
+
+        const messageElements = messages[chatId].map((message, index) => (
+            <Message
+                key={index}
+                text={message.text}
+                sender={message.sender}
+            />)
+        );
+
         return <div className="message_field">
             <div className="messages_board">
                 {messageElements}

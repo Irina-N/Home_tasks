@@ -13,11 +13,6 @@ class Layout extends React.Component {
         messages: propTypes.object.isRequired,
     };
 
-    /* static defaultProps = {
-        chatId: 'chat1',
-    } */
-
-
     render() {
         const { chatId } = this.props;
 

@@ -1,11 +1,11 @@
 {
     "chat1":
     [
-        {"text":"Привет!","sender":"bot"}
+        {"text":"Do you want know something interesting about numbers? Enter any number","sender":"bot"}
     ],
     "chat2":
     [
-        {"text":"Как дела?","sender":"bot"}
+        {"text":"Enter any number","sender":"bot"}
     ],
     "chat3":
     [
@@ -13,8 +13,6 @@
     ],"chat4":
     [],
     "chat5":
-    [
-        {"text":"Amet?","sender":"bot"}
-    ]
+    []
 }
     

@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { TextField, Fab } from '@material-ui/core';
+import { TextField, Fab, CircularProgress } from '@material-ui/core';
 /* import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'; */
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -13,7 +13,6 @@ import propTypes from 'prop-types';
 import { addChatThunk, addChat, fetchChats } from '../actions/chats.jsx';
 //import { deleteChatThunk } from '../actions/chats.jsx';
 import { connect } from 'react-redux';
-
 
 
 class ChatList extends React.Component {
@@ -30,13 +29,13 @@ class ChatList extends React.Component {
     };
 
     componentDidMount() {
-        if (this.props.chatsRequestStatus === '') {
+        if (this.props.chatsRequestStatus === '' || this.props.chatsRequestStatus === 'error') {
             this.props.fetchChats();
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (_.isEqual(nextProps.chats, this.props.chats) &&
+        if (_.isEqual(nextProps, this.props) &&
             _.isEqual(nextState, this.state)) {
             return false;
         }
@@ -74,6 +73,13 @@ class ChatList extends React.Component {
     }
  */
     render() {
+
+        if (this.props.chatsRequestStatus === 'started') {
+            return <div className="chatlist">
+                <CircularProgress />
+            </div>
+        }
+
         const { chats } = this.props;
         const getClasses = (chat) => {
             let classTitle = 'chatlist_link';

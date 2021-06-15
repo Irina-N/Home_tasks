@@ -1,17 +1,9 @@
-import { ADD_CHAT, DELETE_CHAT, HIGHLIGHT_CHAT, UNHIGHLIGHT_CHAT, CHATS_LOADING_STARTED, CHATS_LOADING_SUCCESS, CHATS_LOADING_ERROR, CHATS_LOADING_IDLE } from '../actions/chats.jsx';
+import { ADD_CHAT, CHANGE_CHATS_IN_STATE, DELETE_CHAT, HIGHLIGHT_CHAT, UNHIGHLIGHT_CHAT, CHATS_LOADING_STARTED, CHATS_LOADING_SUCCESS, CHATS_LOADING_ERROR } from '../actions/chats.jsx';
 
 const initialState = {
-    chats: {
-        /* 'chat1': { title: 'Lorem', highlighted: false },
-        'chat2': { title: 'Ipsum', highlighted: false },
-        'chat3': { title: 'Dolor', highlighted: false },
-        'chat4': { title: 'Sit', highlighted: false },
-        'chat5': { title: 'Amet', highlighted: false }, */
-    },
+    chats: {},
     chatsRequestStatus: '',
 };
-
-
 
 export const chatsReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -22,6 +14,12 @@ export const chatsReducer = (state = initialState, action) => {
                     ...state.chats,
                     [action.payload.chatId]: { title: action.payload.title, highlighted: false }
                 }
+            }
+
+        case CHANGE_CHATS_IN_STATE:
+            return {
+                ...state,
+                chats: action.payload.updatedChats
             }
 
         /* case DELETE_CHAT:
@@ -50,7 +48,6 @@ export const chatsReducer = (state = initialState, action) => {
         case CHATS_LOADING_STARTED:
         case CHATS_LOADING_SUCCESS:
         case CHATS_LOADING_ERROR:
-        case CHATS_LOADING_IDLE:
             return {
                 ...state,
                 chatsRequestStatus: action.payload
