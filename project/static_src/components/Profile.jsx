@@ -6,15 +6,14 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 import propTypes from "prop-types";
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { editProfile } from '../actions/profile.jsx'
+import { editUserInfo, fetchUserInfo } from '../actions/profile.jsx'
 
 
 class Profile extends React.Component {
     static propTypes = {
         userInfo: propTypes.object.isRequired,
-        editProfile: propTypes.func.isRequired,
+        editUserInfo: propTypes.func.isRequired,
     }
 
     state = {
@@ -33,7 +32,7 @@ class Profile extends React.Component {
         if (age == '') {
             age = this.props.userInfo.userAge;
         }
-        this.props.editProfile(name, age);
+        this.props.editUserInfo(name, age);
     }
 
     render() {
@@ -81,7 +80,7 @@ class Profile extends React.Component {
                         startIcon={<SaveIcon />}
                     >
                         Save
-      </Button>
+                    </Button>
                 </div>
             </div >
         )
@@ -92,6 +91,10 @@ const mapStateToProps = state => ({
     userInfo: state.profileReducer.userInfo,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ editProfile }, dispatch);
+const mapDispatchToProps = dispatch => {
+    return {
+        editUserInfo: (name, age) => dispatch(editUserInfo(name, age)),
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

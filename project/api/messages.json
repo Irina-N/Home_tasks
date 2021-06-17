@@ -1,0 +1,18 @@
+{
+    "chat1":
+    [
+        {"text":"Do you want know something interesting about numbers? Enter any number","sender":"bot"}
+    ],
+    "chat2":
+    [
+        {"text":"Enter any number","sender":"bot"}
+    ],
+    "chat3":
+    [
+        {"text":"This is Dolor!","sender":"bot"}
+    ],"chat4":
+    [],
+    "chat5":
+    []
+}
+    

@@ -7,7 +7,8 @@ export default class Router extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path='/' component={Layout} />
+                <Route
+                    exact path='/' component={Layout} />
                 <Route
                     exact
                     path='/chat/:chatId/'
@@ -23,4 +24,3 @@ export default class Router extends React.Component {
         )
     }
 }
-//Сделать страницу профиля, располагающуюся по пути /profile/, и ссылку на нее в Header’е мессенджера.

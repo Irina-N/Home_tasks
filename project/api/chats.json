@@ -1,0 +1,12 @@
+{
+    "chat1":
+        {"title":"Lorem","highlighted":false},
+    "chat2":
+        {"title":"Ipsum","highlighted":false},
+    "chat3":
+        {"title":"Dolor","highlighted":false},
+    "chat4":
+        {"title":"Sit","highlighted":false},
+    "chat5":
+        {"title":"Amet","highlighted":false}
+}
