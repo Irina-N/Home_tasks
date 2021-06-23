@@ -1,4 +1,5 @@
-import { addChatIdToMessages } from '../actions/message.jsx'
+import { addChatIdToMessages } from '../actions/message.jsx';
+import {REQUEST_STATUSES} from '../constants.jsx';
 
 export const ADD_CHAT = 'CHATS::ADD_CHAT';
 export const CHANGE_CHATS_IN_STATE = 'CHATS::CHANGE_CHATS_IN_STATE';
@@ -66,17 +67,17 @@ export const unHighlightChat = (chatId) => {
 
 export const setChatsRequestStatusStarted = () => ({
     type: CHATS_LOADING_STARTED,
-    payload: 'started',
+    payload: REQUEST_STATUSES.STARTED,
 });
 
 export const setChatsRequestStatusSuccess = () => ({
     type: CHATS_LOADING_SUCCESS,
-    payload: 'success',
+    payload: REQUEST_STATUSES.SUCCESS,
 });
 
 export const setChatsRequestStatusError = () => ({
     type: CHATS_LOADING_ERROR,
-    payload: 'error',
+    payload: REQUEST_STATUSES.ERROR,
 });
 
 export const fetchChats = () => (dispatch) => {

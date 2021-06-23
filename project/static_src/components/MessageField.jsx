@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import propTypes from 'prop-types'
+
 import { TextField, Fab, CircularProgress } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+
 import Message from './Message.jsx';
-import { connect } from 'react-redux';
 import { sendMessageThunk, sendMessage, fetchMessages } from '../actions/message.jsx';
+import { REQUEST_STATUSES } from '../constants.jsx';
 
 
 class MessageField extends React.Component {
@@ -25,7 +28,7 @@ class MessageField extends React.Component {
     };
 
     componentDidMount() {
-        if (this.props.messagesRequestStatus === '' || this.props.messagesRequestStatus === 'error') {
+        if (this.props.messagesRequestStatus === '' || this.props.messagesRequestStatus === REQUEST_STATUSES.ERROR) {
             this.props.fetchMessages();
         }
     }
@@ -59,13 +62,13 @@ class MessageField extends React.Component {
             return <div className="message_field" />
         }
 
-        if (messagesRequestStatus === 'started') {
+        if (messagesRequestStatus === REQUEST_STATUSES.STARTED) {
             return <div className="message_field">
                 <CircularProgress />
             </div>
         }
 
-        if (messagesRequestStatus === 'error') {
+        if (messagesRequestStatus === REQUEST_STATUSES.ERROR) {
             return <div className="message_field">
                 Can't get messages
             </div>
@@ -79,10 +82,8 @@ class MessageField extends React.Component {
             />)
         );
 
-        return <div className="message_field">
-            <div className="messages_board">
-                {messageElements}
-            </div>
+        return <div className="messages_board">
+            {messageElements}
             <div className="text_field">
                 <TextField
                     id="outlined-basic"
@@ -101,7 +102,7 @@ class MessageField extends React.Component {
                     <SendIcon />
                 </Fab>
             </div>
-        </div >;
+        </div>
     }
 }
 

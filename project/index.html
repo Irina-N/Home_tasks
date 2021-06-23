@@ -3,9 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>React</title>
+<link rel="manifest" href="manifest/manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1,
+shrink-to-fit=no">
 </head>
 <body>
-<div id="root"></div>
-<script src="/static/build/app.js"></script>
+    <div id="root"></div>
+    <script src="/static/build/app.js"></script>
+
+    <script src="/static_src/scripts/sw.jsx">
+        /* if ('serviceWorker' in navigator) {
+            // Весь код регистрации у нас асинхронный.
+            navigator.serviceWorker.register('./sw.js')
+            .then(() => navigator.serviceWorker.ready.then((worker) => {
+                worker.sync.register('syncdata');
+            }))
+            .catch((err) => console.log(err));
+        } */
+
+        /* if ('serviceWorker' in navigator) {
+            window.addEventListener('load', 
+            function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                .then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker успешно зарегистрирован со сферой действия: ', registration.scope);
+                    }, 
+                function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker не удалось зарегистрировать: ', err);
+                    })
+                .catch(function(err) {
+                    console.log(err)
+                });
+            });
+        } else {
+            console.log('ServiceWorker не поддерживается');
+        } */
+    </script>
+    <script src="/static_src/scripts/appinstalled.jsx">
+        /* window.addEventListener('appinstalled', (e) => {
+            fetch('http://localhost:8080/', {
+                method: 'GET',
+                credentials: 'include',
+            }); 
+            console.log('что-то произошло')
+        }); */
+        </script>
+        <script src="/static_src/scripts/notifications.jsx"></script>
 </body>
 </html>

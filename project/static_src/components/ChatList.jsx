@@ -1,18 +1,18 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { TextField, Fab, CircularProgress } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import propTypes from 'prop-types';
+import _ from 'lodash';
+
+import { TextField, Fab, CircularProgress, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 /* import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'; */
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import _ from 'lodash';
-import { Link } from 'react-router-dom';
-import propTypes from 'prop-types';
+
 import { addChatThunk, addChat, fetchChats } from '../actions/chats.jsx';
+import { REQUEST_STATUSES } from '../constants.jsx';
 //import { deleteChatThunk } from '../actions/chats.jsx';
-import { connect } from 'react-redux';
+
 
 
 class ChatList extends React.Component {
@@ -29,7 +29,7 @@ class ChatList extends React.Component {
     };
 
     componentDidMount() {
-        if (this.props.chatsRequestStatus === '' || this.props.chatsRequestStatus === 'error') {
+        if (this.props.chatsRequestStatus === '' || this.props.chatsRequestStatus === REQUEST_STATUSES.ERROR) {
             this.props.fetchChats();
         }
     }
@@ -74,13 +74,14 @@ class ChatList extends React.Component {
  */
     render() {
 
-        if (this.props.chatsRequestStatus === 'started') {
+        if (this.props.chatsRequestStatus === REQUEST_STATUSES.STARTED) {
             return <div className="chatlist">
                 <CircularProgress />
             </div>
         }
 
         const { chats } = this.props;
+
         const getClasses = (chat) => {
             let classTitle = 'chatlist_link';
             if (chat.highlighted) {
@@ -88,9 +89,8 @@ class ChatList extends React.Component {
             }
             return classTitle;
         }
-
         const chatElements = Object.keys(chats).map(chatId => (
-            <Link key={chatId} id={chatId} to={`/chat/${chatId}`} className={getClasses(chats[chatId])}>
+            <Link key={chatId} id={chatId} to={`/chat/${chatId}`} className={chats[chatId].highlighted ? "chatlist_link highlight" : "chatlist_link"}>
                 <ListItem button className="chatlist_item">
                     <ListItemIcon>
                         <AccountCircleIcon />
@@ -104,27 +104,25 @@ class ChatList extends React.Component {
             </Link>
         ));
 
-        return <div className="chatlist">
-            <List>
-                {chatElements}
-                <ListItem className="add_chat_field">
-                    <TextField
-                        className="new_chat_title"
-                        name="input"
-                        variant="outlined"
-                        placeholder="Add new chat"
-                        onChange={this.handleChange}
-                        value={this.state.input}
-                        onKeyUp={this.handleKeyUp}
-                    />
-                    <Fab
-                        className="add_chat_btn"
-                        onClick={() => this.handleAddChat()}>
-                        <AddIcon />
-                    </Fab>
-                </ListItem>
-            </List>
-        </div >
+        return <List>
+            {chatElements}
+            <ListItem className="add_chat_field">
+                <TextField
+                    className="new_chat_title"
+                    name="input"
+                    variant="outlined"
+                    placeholder="Add new chat"
+                    onChange={this.handleChange}
+                    value={this.state.input}
+                    onKeyUp={this.handleKeyUp}
+                />
+                <Fab
+                    className="add_chat_btn"
+                    onClick={() => this.handleAddChat()}>
+                    <AddIcon />
+                </Fab>
+            </ListItem>
+        </List>
     }
 }
 
