@@ -1,7 +1,10 @@
 {
     "chat1":
     [
-        {"text":"Do you want know something interesting about numbers? Enter any number","sender":"bot"}
+        {"text":"Do you want know something interesting about numbers? Enter any number","sender":"bot"},
+        {"text": "12", "sender": "Lutra lutra"},
+        {"text": "12 is a sublime number, a number that has a perfec…the sum of its divisors is also a perfect number.", "sender": "bot"}
+
     ],
     "chat2":
     [

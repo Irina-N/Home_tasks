@@ -1,9 +1,12 @@
 import React from 'react';
-import propTypes from "prop-types";
 import { connect } from 'react-redux';
+import propTypes from "prop-types";
+
 import Header from './Header.jsx';
-import ChatList from './ChatList.jsx'
+import ChatList from './ChatList.jsx';
+import InstallPopup from './InstallPopup.jsx';
 import MessageField from './MessageField.jsx';
+
 import '../styles/styles.css';
 
 class Layout extends React.Component {
@@ -19,14 +22,20 @@ class Layout extends React.Component {
         return <div className="layout">
             <Header
                 chatId={chatId}
+                site="chats"
             />
             <div className="content">
-                <ChatList />
-                <MessageField
-                    chatId={chatId}
-                />
+                <div className={chatId ? "chatlist hidden_mob" : "chatlist"}>
+                    <ChatList />
+                </div >
+                <div className={chatId ? "message_field" : "message_field hidden_mob"}>
+                    <MessageField
+                        chatId={chatId}
+                    />
+                </div>
             </div>
-        </div>;
+            <InstallPopup />
+        </div >;
     }
 };
 

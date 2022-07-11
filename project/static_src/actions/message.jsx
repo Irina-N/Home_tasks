@@ -1,4 +1,8 @@
-import { highlightChat, unHighlightChat } from './chats.jsx'
+import _ from 'lodash';
+
+import { highlightChat, unHighlightChat } from './chats.jsx';
+import { REQUEST_STATUSES } from '../constants.jsx';
+
 
 export const SEND_MESSAGE = 'MESSAGE::SEND_MESSAGE';
 export const ADD_CHAT_ID_TO_MESSAGES = 'MESSAGES::ADD_CHAT_ID_TO_MESSAGES';
@@ -53,29 +57,30 @@ export const changeMessagesInState = (updatedMessages) => {
 
 export const changeUserNameInPrevMessages = (newUserName) => (dispatch, getState) => {
     const messages = getState().messagesReducer.messages;
-    for (let chatId in messages) {
-        messages[chatId].forEach(message => {
+    const updatedMessages = _.cloneDeep(messages);
+    for (let chatId in updatedMessages) {
+        updatedMessages[chatId].forEach(message => {
             if (message.sender !== 'bot') {
                 message.sender = newUserName;
             }
         })
     }
-    //Неожиданно оказалось, что state можно изменить прямо здесь, не используя диспатч. Это вообще законно? 
+    dispatch(changeMessagesInState(updatedMessages));
 }
 
 export const setMessagesRequestStatusStarted = () => ({
     type: MESSAGES_LOADING_STARTED,
-    payload: 'started',
+    payload: REQUEST_STATUSES.STARTED,
 });
 
 export const setMessagesRequestStatusSuccess = () => ({
     type: MESSAGES_LOADING_SUCCESS,
-    payload: 'success',
+    payload: REQUEST_STATUSES.SUCCESS,
 });
 
 export const setMessagesRequestStatusError = () => ({
     type: MESSAGES_LOADING_ERROR,
-    payload: 'error',
+    payload: REQUEST_STATUSES.ERROR,
 });
 
 export const fetchMessages = () => (dispatch) => {

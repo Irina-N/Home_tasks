@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { TextField, Fab } from '@material-ui/core';
-import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
-import propTypes from "prop-types";
 import { connect } from 'react-redux';
-import { editUserInfo, fetchUserInfo } from '../actions/profile.jsx'
+import propTypes from "prop-types";
+
+import { TextField, Button, Fab, Icon } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+
+import Header from './Header.jsx';
+import { editUserInfo, fetchUserInfo } from '../actions/profile.jsx';
 
 
 class Profile extends React.Component {
@@ -40,12 +39,9 @@ class Profile extends React.Component {
         const { userNameInput, userAgeInput } = this.state;
         return (
             <div className="profile">
-                <header className="profile_header">
-                    <Link to="/">
-                        Back to chats
-                    </Link>
-                    <span className="profile_header_title">{userInfo.userName}</span>
-                </header>
+                <Header
+                    site="profile"
+                />
                 <div className="profile_data">
                     <div className="user_name user_info_block">
                         <span className="user_info_title">User name: </span>

@@ -1,4 +1,5 @@
 import { changeUserNameInPrevMessages } from './message.jsx';
+import { REQUEST_STATUSES } from '../constants.jsx';
 
 export const EDIT_PROFILE = 'PROFILE::EDIT_PROFILE';
 export const PROFILE_LOADING_STARTED = 'PROFILE::PROFILE_LOADING_STARTED';
@@ -23,17 +24,17 @@ export const editUserInfo = (userName, userAge) => (dispatch) => {
 
 export const setProfileRequestStatusStarted = () => ({
     type: PROFILE_LOADING_STARTED,
-    payload: 'started',
+    payload: REQUEST_STATUSES.STARTED,
 });
 
 export const setProfileRequestStatusSuccess = () => ({
     type: PROFILE_LOADING_SUCCESS,
-    payload: 'success',
+    payload: REQUEST_STATUSES.SUCCESS,
 });
 
 export const setProfileRequestStatusError = () => ({
     type: PROFILE_LOADING_ERROR,
-    payload: 'error',
+    payload: REQUEST_STATUSES.ERROR,
 });
 
 export const fetchUserInfo = () => (dispatch) => {
